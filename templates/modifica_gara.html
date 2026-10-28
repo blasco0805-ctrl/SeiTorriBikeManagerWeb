@@ -76,12 +76,14 @@
             Circuito
         </label>
 
-        <input
-            type="text"
-            name="circuito"
-            class="form-control"
-            value="{{ gara['circuito'] }}"
-        >
+        <select name="circuito_id" class="form-control">
+            {% for circuito in circuiti %}
+            <option value="{{ circuito.id }}"
+                {% if circuito.id == gara.circuito_id %}selected{% endif %}>
+                {{ circuito.nome }}
+            </option>
+            {% endfor %}
+        </select>
 
     </div>
 
