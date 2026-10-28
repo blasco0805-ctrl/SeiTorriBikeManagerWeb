@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>
+            🚴 {{ gara['nome'] }}
+        </h2>
+
+        <a href="{{ url_for('modifica_gara', id=gara['id']) }}"
+           class="btn btn-primary">
+            🛠️ Modifica
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            Dettaglio Gara
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p><strong>📅 Data:</strong> {{ gara['data'] }}</p>
+                    <p><strong>📍 Luogo:</strong> {{ gara['luogo'] }}</p>
+                    <p><strong>🏁 Tipo:</strong> {{ gara['tipo'] }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <p><strong>📏 Distanza:</strong> {{ gara['distanza'] }}</p>
+                    <p><strong>⛰️ Dislivello:</strong> {{ gara['dislivello'] }}</p>
+                    <p><strong>📝 Note:</strong> {{ gara['note'] }}</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+<div class="row mb-4">
+
+    {% for c in conteggi %}
+
+    <div class="col-md-2 mb-2">
+
+        <div class="card text-center shadow-sm">
+
+            <div class="card-body">
+
+                {% if c['stato'] == 'NON_INTERESSATO' %}
+                    <h3 class="text-secondary">⚪</h3>
+
+                {% elif c['stato'] == 'INTERESSATO' %}
+                    <h3 class="text-warning">🟡</h3>
+
+                {% elif c['stato'] == 'CONFERMATO' %}
+                    <h3 class="text-success">🟢</h3>
+
+                {% elif c['stato'] == 'PARTECIPATO' %}
+                    <h3 class="text-primary">🏆</h3>
+
+                {% elif c['stato'] == 'ASSENTE' %}
+                    <h3 class="text-danger">❌</h3>
+
+                {% else %}
+                    <h3>❓</h3>
+                {% endif %}
+
+                <h4>{{ c['totale'] }}</h4>
+
+                <small>{{ c['stato'] }}</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-success text-white">
+        👥 Partecipanti
+    </div>
+
+    <div class="card-body">
+
+        {% if partecipanti %}
+
+        <table class="table table-striped align-middle">
+
+            <thead>
+                <tr>
+                    <th>Socio</th>
+                    <th>Stato</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for p in partecipanti %}
+
+            <tr>
+
+                <td>
+                    {{ p['cognome'] }} {{ p['nome'] }}
+                </td>
+
+                <td>
+
+                    <form method="POST"
+                          action="{{ url_for('aggiorna_stato_partecipazione') }}"
+                            name=""partecipazione_id"
+                            value="{{ p['id'] }}"> 
+                            
+                        <input
+                            type="hidden"
+                            name="partecipazione_id"
+                            value="{{ p['id'] }}">
+
+
+                        <select name="stato"
+                            class="form-select form-select-sm"
+                            onchange="this.form.submit()">
+
+                            <option value="NON_INTERESSATO"
+                                {% if p['stato']=='NON_INTERESSATO' %}selected{% endif %}>
+                                ⚪ Non interessato
+                            </option>
+
+                            <option value="INTERESSATO"
+                                {% if p['stato']=='INTERESSATO' %}selected{% endif %}>
+                                🟡 Interessato
+                            </option>
+
+                            <option value="CONFERMATO"
+                                {% if p['stato']=='CONFERMATO' %}selected{% endif %}>
+                                🟢 Confermato
+                            </option>
+
+                            <option value="PARTECIPATO"
+                                {% if p['stato']=='PARTECIPATO' %}selected{% endif %}>
+                                🏆 Partecipato
+                            </option>
+
+                            <option value="ASSENTE"
+                                {% if p['stato']=='ASSENTE' %}selected{% endif %}>
+                                ❌ Assente
+                            </option>
+
+                        </select>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <div class="alert alert-info">
+                Nessuna partecipazione registrata.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+<div class="mt-3">
+
+    <a href="{{ url_for('gare') }}" class="btn btn-secondary">
+       ↩️ Torna alle Gare
+    </a>
+
+    <a href="{{ url_for('allegati_gara', gara_id=gara['id']) }}" class="btn btn-info">
+        📎 Allegati
+    </a>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    📅 Calendario Gare
+</h1>
+
+<div class="card shadow">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <a
+            class="btn btn-outline-secondary"
+            href="/calendario?mese={{ mese_prec }}&anno={{ anno_prec }}">
+            ◀
+        </a>
+
+        <h4 class="mb-0">
+            {{ mese }}/ne-secondary"
+            href="/calendario?mese={{ mese_succ }}&anno={{ anno_succ }}">
+            ▶
+        </a>
+
+    </bordered text-center">
+
+            <thead>
+
+                <tr>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>M</th>
+                    <th>G</th>
+                    <th>V</th>
+                    <th>S</th>
+                    <th>D</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for settimana in calendario %}
+
+                <tr>
+
+                    {% for giorno in settimana %}
+
+                    <td style="height:120px; vertical-align:top;">
+
+                    {% if giorno != 0 %}
+
+                        <strong>
+                            {{ giorno }}
+                        </strong>
+
+                        {% set data_corrente =
+                        "%04d-%02d-%02d"|format(
+                        anno,
+                        mese,
+                        giorno
+                        ) %}
+
+                        {% for gara in gare_mese %}
+
+                            {% if gara["data"] == data_corrente %}
+
+                                <div
+                                    class="mt-1 p-1 bg-primary text-white rounded"
+                                    style="font-size:11px;"
+                                >
+                                    🚴 {{ gara["nome"] }}
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

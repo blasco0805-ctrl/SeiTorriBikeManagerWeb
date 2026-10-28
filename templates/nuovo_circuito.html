@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    🏆 Nuovo Circuito
+</h1>
+
+<form
+    method="POST"
+    action="/circuiti/salva"
+>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Nome Circuito
+        </label>
+
+        <input
+            type="text"
+            name="nome"
+            class="form-control"
+            required
+        >
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
+        💾 Salva Circuito
+    </button>
+
+    <a
+        href="/circuiti"
+        class="btn btn-secondary"
+    >
+        ↩️ Annulla
+    </a>
+
+</form>
+
+{% endblock %}

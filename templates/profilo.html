@@ -1,0 +1,26 @@
+            <a
+                href="/"
+                class="btn btn-secondary"
+            >
+                🏠 Home
+            </a>
+
+
+<form method="POST"
+      action="{{ url_for('aggiorna_password') }}">
+
+    <div class="mb-3">
+        <label>Nuova password</label>
+        <input
+            type="password"
+            name="password"
+            class="form-control"
+            required>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Salva password
+    </button>
+
+</form>

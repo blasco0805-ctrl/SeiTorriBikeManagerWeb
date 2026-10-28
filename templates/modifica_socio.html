@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    ✏️ Modifica Socio
+</h1>
+
+<form
+    method="POST"
+    action="/soci/aggiorna/{{ socio['id'] }}"
+>
+
+            <input
+                type="text"
+                name="nome"
+                class="form-control"
+                value="{{ socio['nome'] }}"
+                required
+            >
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Cognome
+            </label>
+
+            <input
+                type="text"
+                name="cognome"
+                class="form-control"
+                value="{{ socio['cognome'] }}"
+                required
+            >
+
+        </div>
+
+    </div>
+
+        <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Telefono
+            </label>
+
+            <input
+                type="text"
+                name="telefono"
+                class="form-control"
+                value="{{ socio['telefono'] }}"
+            >
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                value="{{ socio['email'] }}"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Categoria
+            </label>
+
+            <input
+                type="text"
+                name="categoria"
+                class="form-control"
+                value="{{ socio['categoria'] }}"
+            >
+
+        </div>
+
+    </div>
+        <div class="mb-3">
+
+        <label class="form-label">
+            Note
+        </label>
+
+        <textarea
+            name="note"
+            class="form-control"
+            rows="4"
+        >{{ socio['note'] }}</textarea>
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-warning"
+    >
+        💾 Aggiorna Socio
+    </button>
+
+ <a
+        href="/soci"
+        class="btn btn-secondary"
+    >
+        ↩️ Annulla
+    </a>
+
+</form>
+
+{% endblock %}

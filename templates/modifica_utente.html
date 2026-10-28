@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Modifica Utente</h2>
+
+    <form method="post"
+          action="/utenti/aggiorna/{{ utente.id }}">
+
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input
+                type="text"
+                name="username"
+                class="form-control"
+                value="{{ utente.username }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input
+                type="text"
+                name="password"
+                class="form-control"
+                value="{{ utente.password }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ruolo</label>
+
+            <select
+                name="ruolo"
+                class="form-select">
+
+                <option value="ADMIN"
+                    {% if utente.ruolo == 'ADMIN' %}selected{% endif %}>
+                    ADMIN
+                </option>
+
+                <option value="SOCIO"
+                    {% if utente.ruolo == 'SOCIO' %}selected{% endif %}>
+                    SOCIO
+                </option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Socio associato</label>
+
+            <select
+                name="socio_id"
+                class="form-select">
+
+                <option value="">
+                    Nessun socio
+                </option>
+
+                {% for socio in soci %}
+                <option
+                    value="{{ socio.id }}"
+                    {% if socio.id == utente.socio_id %}selected{% endif %}>
+                    {{ socio.cognome }} {{ socio.nome }}
+                </option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success">
+            Salva
+        </button>
+
+        <a
+            href="/utenti"
+            class="btn btn-secondary">
+            Annulla
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

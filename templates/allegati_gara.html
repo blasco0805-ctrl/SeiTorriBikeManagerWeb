@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    📎 Allegati Gara
+</h1>
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h4>
+            🚴 {{ gara["nome"] }}
+        </h4>
+
+        <p class="mb-1">
+            📅 {{ gara["data"] }}
+        </p>
+
+        <p class="mb-0">
+            📍 {{ gara["luogo"] }}
+        </p>
+
+    </div>
+
+</div>
+
+<form
+    method="POST"
+    action="/gare/allegati/upload/{{ gara['id'] }}"
+    enctype="multipart/form-data"
+>
+
+    <div class="mb-3">
+
+        <input
+            type="file"
+            name="file"
+            class="form-control"
+            required
+        >
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
+        📎 Carica Allegato
+    </button>
+
+</form>
+
+<hr>
+
+<h5>
+    Allegati
+</h5>
+
+{% if allegati %}
+
+    {% for allegato in allegati %}
+
+        <div class="border rounded p-2 mb-2">
+
+            <strong>
+                📎 {{ allegato["nome_file"] }}
+            </strong>
+
+            <div class="mt-2">
+
+                <a
+                    href="/gare/allegati/download/{{ allegato['id'] }}"
+                    class="btn btn-primary btn-sm"
+                >
+                    ⬇️ Scarica
+                </a>
+
+                <a
+                    href="/gare/allegati/elimina/{{ allegato['id'] }}"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Eliminare l\'allegato?');"
+                >
+                    🗑 Elimina
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="alert alert-info">
+
+        Nessun allegato presente.
+
+    </div>
+
+{% endif %}
+
+<a
+    href="/gare"
+    class="btn btn-secondary"
+>
+    ↩️ Torna alle Gare
+</a>
+
+    </div>
+
+</div>
+
+{% endblock %}

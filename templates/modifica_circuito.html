@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    ✏️ Modifica Circuito
+</h1>
+
+<form
+    method="POST"
+    action="/circuiti/aggiorna/{{ circuito['id'] }}"
+>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+             <input
+            type="text"
+            name="nome"
+            class="form-control"
+            value="{{ circuito['nome'] }}"
+            required
+        >
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-warning"
+    >
+        💾 Aggiorna Circuito
+    </button>
+
+    <a
+        href="/circuiti"
+        class="btn btn-secondary"
+    >
+        ↩️ Annulla
+    </a>
+
+</form>
+
+{% endblock %}

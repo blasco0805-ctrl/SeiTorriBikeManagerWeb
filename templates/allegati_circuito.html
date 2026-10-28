@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-8 mx-auto">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h1 class="mb-4">
+                    📎 Allegati Circuito
+                </h1>
+
+                <h4>
+                    🏆 {{ circuito["nome"] }}
+                </h4>
+
+                <hr>
+
+                <form
+    method="POST"
+    action="/circuiti/allegati/upload/{{ circuito['id'] }}"
+    enctype="multipart/form-data"
+>
+
+    <div class="mb-3">
+
+        <input
+            type="file"
+            name="file"
+            class="form-control"
+            required
+        >
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
+        📎 Carica Allegato
+    </button>
+
+</form>
+
+<hr>
+
+<h5>
+    Allegati
+</h5>
+
+{% if allegati %}
+
+    {% for allegato in allegati %}
+
+        <div class="border rounded p-2 mb-2">
+
+            <strong>
+                📎 {{ allegato["nome_file"] }}
+            </strong>
+
+            <div class="mt-2">
+
+                <a
+                    href="/circuiti/allegati/download/{{ allegato['id'] }}"
+                    class="btn btn-primary btn-sm"
+                >
+                    ⬇️ Scarica
+                </a>
+
+                <a
+                    href="/circuiti/allegati/elimina/{{ allegato['id'] }}"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Eliminare l\'allegato?');"
+                >
+                    🗑 Elimina
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="alert alert-info">
+
+        Nessun allegato presente.
+
+    </div>
+
+{% endif %}
+
+<a
+    href="/circuiti"
+    class="btn btn-secondary"
+>
+    ↩️ Torna ai Circuiti
+</a>
+
+    </div>
+
+</div>
+
+{% endblock %}

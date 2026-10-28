@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Utenti</h2>
+
+        <a href="/utenti/nuovo" class="btn btn-primary">
+            Nuovo Utente
+        </a>
+    </div>
+
+    <table class="table table-striped table-hover">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Ruolo</th>
+                <th>Socio</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for utente in utenti %}
+            <tr>
+
+                <td>{{ utente.id }}</td>
+
+                <td>{{ utente.username }}</td>
+
+                <td>{{ utente.ruolo }}</td>
+
+                <td>{{ utente.socio_id }}</td>
+
+                <td>
+
+                    <a
+                        href="/utenti/modifica/{{ utente.id }}"
+                        class="btn btn-warning btn-sm">
+                        Modifica
+                    </a>
+
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex align-items-center mb-4">
+
+    <img
+        src="{{ url_for('static', filename='img/logo.png') }}"
+        alt="Sei Torri Bike"
+        style="height:80px"
+    >
+
+    <div>
+
+        <h1 class="display-5 fw-bold mb-0">
+            Sei Torri Bike Manager
+        </h1>
+
+        <small class="text-muted">
+            Gestione gare, soci, partecipazioni, circuiti e calendario
+        </small>
+
+    </div>
+
+</div>
+
+
+<div class="row g-4">
+
+    <!-- GARE -->
+
+    <div class="col-md-4">
+
+        <a
+            href="/gare"
+            class="text-decoration-none"
+        >
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h1>🚴</h1>
+
+                    <h3>{{ tot_gare }}</h3>
+
+                    <p>Gare</p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- SOCI -->
+
+    <div class="col-md-4">
+
+        <a
+            href="/soci"
+            class="text-decoration-none"
+        >
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h1>👥</h1>
+
+                    <h3>{{ tot_soci }}</h3>
+
+                    <p>Soci</p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- CIRCUITI -->
+
+    <div class="col-md-4">
+
+        <a
+            href="/circuiti"
+            class="text-decoration-none text-dark"
+        >
+
+            <div class="card bg-warning shadow">
+
+                <div class="card-body text-center">
+                    
+                    <h1>🏆</h1>
+
+                    <h3>{{ tot_circuiti }}</h3>
+
+                    <p>Circuiti</p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mt-1">
+
+    <!-- PARTECIPAZIONI -->
+
+    <div class="col-md-4">
+
+        <a
+            href="/partecipazioni"
+            class="text-decoration-none"
+        >
+
+            <div class="card bg-info text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h1>✅</h1>
+
+                    <p>Partecipazioni</p>
+
+                </div>
+
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- WORK IN PROGRESS 1 -->
+
+    <div class="col-md-4">
+
+        <div class="card bg-secondary text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h1>🚧</h1>
+
+                <h3>-</h3>
+
+                <p>Work in Progress</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- WORK IN PROGRESS 2 -->
+
+    <div class="col-md-4">
+
+        <div class="card bg-dark text-white shadow">
+
+            <div class="card-body text-center">
+
+                <h1>🚧</h1>
+
+                <h3>-</h3>
+
+                <p>Work in Progress</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="row mt-4">
+
+    <!-- GARE PROSSIME -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow h-100">
+
+            <div class="card-header">
+
+                🚴 Prossime Gare
+
+            </div>
+
+            <div class="card-body">
+
+    {% if prossime_gare %}
+
+        <ul class="list-group">
+        {% for gara in prossime_gare %}
+            <li class="list-group-item">
+                <a
+                    href="{{ url_for('dettaglio_gara', gara_id=gara['id']) }}"
+                    class="text-decoration-none"
+                >
+                    🚴 {{ gara['nome'] }}
+                </a>
+                <br>
+                <small class="text-muted">
+                    📅 {{ gara['data'] }}
+                </small>
+            </li>
+        {% endfor %}
+</ul>
+
+    {% else %}
+
+        <p class="text-muted">
+            Nessuna gara trovata
+        </p>
+
+    {% endif %}
+
+</div>
+        </div>
+
+    </div>
+
+    <!-- CALENDARIO -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow h-100">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <a
+                href="/?mese={{ mese_prec }}&anno={{ anno_prec }}"
+                class="btn btn-sm btn-outline-secondary"
+            >
+                ◀
+            </a>
+
+            <h5 class="mb-0">
+                📅 {{ mese }}/{{ anno }}
+            </h5>
+
+            <a
+                href="/?mese={{ mese_succ }}&anno={{ anno_succ }}"
+                class="btn btn-sm btn-outline-secondary"
+            >
+                ▶
+            </a>
+
+        </div>
+  
+
+        <div class="card-body">
+
+            <table class="table table-bordered text-center">
+
+                <thead>
+
+                    <tr>
+                        <th>L</th>
+                        <th>M</th>
+                        <th>M</th>
+                        <th>G</th>
+                        <th>V</th>
+                        <th>S</th>
+                        <th>D</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for settimana in calendario %}
+
+                    <tr>
+
+                        {% for giorno in settimana %}
+
+                        <td
+                            style="
+                                height:120px;
+                                vertical-align:top;
+                                font-size:11px;
+                            "
+                        >
+
+                            {% if giorno != 0 %}
+
+                                <strong>
+                                    {{ giorno }}
+                                </strong>
+
+                                {% if giorno in gare_per_giorno %}
+
+                                    <hr class="m-1">
+
+                                    {% for nome in gare_per_giorno[giorno] %}
+
+                                        <div
+                                            class="bg-primary text-white rounded p-1 mb-1"
+                                            style="font-size:10px;"
+                                        >
+                                            🚴 {{ nome }}
+                                        </div>
+
+                                    {% endfor %}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>
+        👥 Partecipazioni - {{ gara['nome'] }}
+    </h2>
+
+    <table class="table table-striped mt-3">
+
+        <thead>
+            <tr>
+                <th>Socio</th>
+                <th>Stato</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for p in partecipazioni %}
+
+            <tr>
+                <td>{{ p['cognome'] }} {{ p['nome'] }}</td>
+                <td>{{ p['stato'] }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="{{ url_for('dettaglio_gara', gara_id=gara['id']) }}" class="btn btn-secondary">
+        ← Torna alla Gara
+    </a>
+
+</div>
+
+{% endblock %}
+`

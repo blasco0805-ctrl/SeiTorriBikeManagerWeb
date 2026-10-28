@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+            ✅ Partecipazioni Gare
+        </h2>
+
+    </div>
+
+    {% if gare %}
+
+        {% for gara_id, dati in gare.items() %}
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h5 class="mb-0">
+                            🚴 {{ dati['gara']['nome'] }}
+                        </h5>
+
+                        <small>
+                            📅 {{ dati['gara']['data'] }}
+                        </small>
+
+                    </div>
+
+                    <div>
+
+                        <a href="{{ url_for('dettaglio_gara', gara_id=gara_id) }}"
+                           class="btn btn-light btn-sm">
+                            ✏️ Dettaglio                     
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+            <div class="row text-center mb-4">
+
+                    <div class="col-md-2">
+
+                        <div class="card border-secondary">
+
+                            <div class="card-body">
+
+                                <h3>⚪</h3>
+
+                                <h5>
+                                    {{ dati['stats']['NON_INTERESSATO'] }}
+                                </h5>
+
+                                <small>
+                                    Non interessati
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <div class="card border-warning">
+
+                            <div class="card-body">
+
+                                <h3>🟡</h3>
+
+                                <h5>
+                                    {{ dati['stats']['INTERESSATO'] }}
+                                </h5>
+
+                                <small>
+                                    Interessati
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <div class="card border-success">
+
+                            <div class="card-body">
+
+                                <h3>🟢</h3>
+
+                                <h5>
+                                    {{ dati['stats']['CONFERMATO'] }}
+                                </h5>
+
+                                <small>
+                                    Confermati
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <div class="card border-primary">
+
+                            <div class="card-body">
+
+                                <h3>✅</h3>
+
+                                <h5>
+                                    {{ dati['stats']['PARTECIPATO'] }}
+                                </h5>
+
+                                <small>
+                                    Partecipato
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <div class="card border-danger">
+
+                            <div class="card-body">
+
+                                <h3>❌</h3>
+
+                                <h5>
+                                    {{ dati['stats']['ASSENTE'] }}
+                                </h5>
+
+                                <small>
+                                    Assenti
+                                </small>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th width="50%">
+                                    Socio
+                                </th>
+
+                                <th width="25%">
+                                    Stato
+                                </th>
+
+                                <th width="25%">
+                                    Azione
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                        
+                            {% for p in dati['partecipanti'] %}
+
+                            <tr>
+
+                                <td>
+
+                                    👤
+                                    {{ p['cognome'] }}
+                                    {{ p['nome'] }}
+
+                                </td>
+
+                                <td>
+
+                                    {% if p['stato'] == 'NON_INTERESSATO' %}
+                                        <span class="badge bg-secondary">
+                                            Non interessato
+                                        </span>
+
+                                    {% elif p['stato'] == 'INTERESSATO' %}
+                                        <span class="badge bg-warning text-dark">
+                                            Interessato
+                                        </span>
+
+                                    {% elif p['stato'] == 'CONFERMATO' %}
+                                        <span class="badge bg-success">
+                                            Confermato
+                                        </span>
+
+                                    {% elif p['stato'] == 'PARTECIPATO' %}
+                                        <span class="badge bg-primary">
+                                            Partecipato
+                                        </span>
+                                    
+                                    {% elif p['stato'] == 'ASSENTE' %}
+                                        <span class="badge bg-danger">
+                                            Assente
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                     
+                                     <form method="POST"
+                                        action="{{ url_for('aggiorna_stato_partecipazione_part') }}"
+                                            name=""partecipazione_id"
+                                            value="{{ p['id'] }}"> 
+                                            
+                                        <input
+                                            type="hidden"
+                                            name="partecipazione_id"
+                                            value="{{ p['id'] }}">
+
+
+                                        <select name="stato"
+                                            class="form-select form-select-sm"
+                                            onchange="this.form.submit()">
+
+                                            <option value="NON_INTERESSATO"
+                                                {% if p['stato']=='NON_INTERESSATO' %}selected{% endif %}>
+                                                ⚪ Non interessato
+                                            </option>
+
+                                            <option value="INTERESSATO"
+                                                {% if p['stato']=='INTERESSATO' %}selected{% endif %}>
+                                                🟡 Interessato
+                                            </option>
+
+                                            <option value="CONFERMATO"
+                                                {% if p['stato']=='CONFERMATO' %}selected{% endif %}>
+                                                🟢 Confermato
+                                            </option>
+
+                                            <option value="PARTECIPATO"
+                                                {% if p['stato']=='PARTECIPATO' %}selected{% endif %}>
+                                                🏆 Partecipato
+                                            </option>
+
+                                            <option value="ASSENTE"
+                                                {% if p['stato']=='ASSENTE' %}selected{% endif %}>
+                                                ❌ Assente
+                                            </option>
+
+                                        </select>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="alert alert-info">
+
+            Nessuna partecipazione presente.
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    📎 Allegati Socio
+</h1>
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h4>
+            👤 {{ socio["cognome"] }} {{ socio["nome"] }}
+        </h4>
+
+        <p class="mb-1">
+            📞 {{ socio["telefono"] }}
+        </p>
+
+        <p class="mb-1">
+            ✉️ {{ socio["email"] }}
+        </p>
+
+        <p class="mb-1">
+            🏷️ {{ socio["categoria"] }}
+        </p>
+
+    </div>
+
+</div>
+
+<div class="card shadow mb-4">
+
+    <div class="card-header">
+        📤 Carica Allegato
+    </div>
+
+    <div class="card-body">
+
+        <form
+            method="POST"
+            action="/soci/allegati/upload/{{ socio['id'] }}"
+            enctype="multipart/form-data"
+        >
+
+            <div class="mb-3">
+                <label for="file" class="form-label">File</label>
+                <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                📤 Carica File
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="card shadow mb-4">
+
+    <div class="card-header">
+        📂 Allegati Presenti
+    </div>
+
+    <div class="card-body">
+
+        {% if allegati %}
+
+            {% for allegato in allegati %}
+
+            <div class="border rounded p-3 mb-2">
+
+                <strong>
+                    📎 {{ allegato["nome_file"] }}
+                </strong>
+
+                <div class="mt-2">
+
+                    <a
+                        href="/soci/allegati/download/{{ allegato['id'] }}"
+                        class="btn btn-success btn-sm"
+                    >
+                        ⬇️ Scarica
+                    </a>
+
+                    <a
+                        href="/soci/allegati/elimina/{{ allegato['id'] }}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Sei sicuro di voler eliminare questo allegato?')"
+                    >
+                        🗑 Elimina
+                    </a>
+                </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="alert alert-info">
+
+        Nessun allegato presente.
+
+    </div>
+
+{% endif %}
+
+<a
+    href="/soci"
+    class="btn btn-secondary"
+>
+    ↩️ Torna ai Soci
+</a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

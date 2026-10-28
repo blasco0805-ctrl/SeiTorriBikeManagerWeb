@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    👥 Soci
+</h1>
+
+<div class="mb-3">
+
+    <a
+        href="/soci/nuovo"
+        class="btn btn-primary"
+    >
+        ➕ Nuovo Socio
+    </a>
+
+    </div>
+
+    {% if soci %}
+
+    {% for socio in soci %}
+
+    <div class="card shadow mb-3">
+
+        <div class="card-body">
+
+            <h5>
+                👤 {{ socio["cognome"] }} {{ socio["nome"] }}
+            </h5>
+
+            <p class="mb-1">
+                📞 {{ socio["telefono"] }}
+            </p>
+
+            <p class="mb-1">
+                ✉️ {{ socio["email"] }}
+            </p>
+
+            <p class="mb-2">
+                🏷️ {{ socio["categoria"] }}
+            </p>
+
+            <div class="mt-3">
+
+                <a
+                    href="/soci/modifica/{{ socio['id'] }}"
+                    class="btn btn-warning btn-sm"
+                >
+                    📝 Modifica
+                </a>
+
+                <a
+                    href="/soci/elimina/{{ socio['id'] }}"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Sei sicuro di voler eliminare questo socio?')"
+                >
+                    🗑 Elimina
+                </a>
+
+                <a
+                    href="/soci/allegati/{{ socio['id'] }}"
+                    class="btn btn-info"
+                >
+                    📎 Allegati
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="alert alert-info">
+        Nessun socio presente.
+    </div>
+
+{% endif %}
+
+{% endblock %}

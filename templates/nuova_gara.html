@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    ➕ Nuova Gara
+</h1>
+
+<form method="POST" action="/gare/salva">
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Nome Gara
+            </label>
+
+            <input
+                type="text"
+                name="nome"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Luogo
+            </label>
+
+            <input
+                type="text"
+                name="luogo"
+                class="form-control"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Data
+            </label>
+
+            <input
+                type="date"
+                name="data"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Tipologia
+            </label>
+
+            <select
+                name="tipologia"
+                class="form-select"
+            >
+                <option>Strada</option>
+                <option>MTB</option>
+                <option>Gravel</option>
+            </select>
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Circuito
+            </label>
+
+            <select
+                name="circuito"
+                class="form-select"
+            >
+
+                <option value="">
+                    Nessun circuito
+                </option>
+
+                {% for circuito in circuiti %}
+
+                <option>
+                    {{ circuito["nome"] }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Distanza (km)
+            </label>
+
+            <input
+                type="number"
+                name="distanza"
+                class="form-control"
+            >
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Dislivello (m)
+            </label>
+
+            <input
+                type="number"
+                name="dislivello"
+                class="form-control"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Descrizione
+        </label>
+
+        <textarea
+            name="descrizione"
+            class="form-control"
+            rows="4"
+        ></textarea>
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
+        💾 Salva Gara
+    </button>
+
+    <a
+        href="/gare"
+        class="btn btn-secondary"
+    >
+        ↩️ Annulla
+    </a>
+
+
+
+</form>
+
+{% endblock %}
